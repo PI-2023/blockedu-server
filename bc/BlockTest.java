@@ -12,6 +12,12 @@ public class BlockTest {
         String expectedHash = "hash";
 
         String actualHash = block.calculateHash();
+
+        try {
+            Assert.assertEquals(expectedHash, actualHash);
+        } catch (Exception e) {
+            System.out.println("Erro: " + e);
+        }
     }
 
 }
