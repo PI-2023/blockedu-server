@@ -18,6 +18,14 @@ public class BlockChainTest {
         Assertions.assertEquals(0, genesisBlock.getIndex());
         Assertions.assertEquals("0", genesisBlock.getPreviousHash());
         Assertions.assertEquals("Genesis Block", genesisBlock.getData());
+
+        try {Block genesisBlock2 = blockchain.createGenesisBlock();
+            Assertions.assertEquals(0, genesisBlock2.getIndex());
+            Assertions.assertEquals("0", genesisBlock2.getPreviousHash());
+            Assertions.assertEquals("Genesis Block", genesisBlock2.getData());
+        } catch (Exception e) {
+            System.out.println("Erro: " + e);
+        }
     }
 
     @Test
