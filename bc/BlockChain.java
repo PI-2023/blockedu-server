@@ -26,7 +26,6 @@ public class BlockChain {
             blocks.add(block);
         }
 
-        // Falta os metodos Getters, não sei se tem Setters.
         public List<Block> getBlocks() {
             return blocks;
         }
