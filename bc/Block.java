@@ -3,7 +3,7 @@ package bc;
 import java.util.Date;
 
 public class Block {
-    private int index;
+    public int index;
     public String previousHash;
     public String hash;
     private String data;
@@ -18,15 +18,25 @@ public class Block {
     }
 
     public String calculateHash(){
-        String calculatedhash = Crypt.sha256(
-            previousHash +
-            Long.toString(timestamp) +
-            Integer.toString(index) +
-            data
-        );
+        String calculatedhash = Crypt.sha256(previousHash + Long.toString(timestamp) + Integer.toString(index) + data);
         return calculatedhash;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public String getHash(){
+        return hash;
+    }
+
+    public String getPreviousHash(){
+        return previousHash;
+    }
+
+    public String getData(){
+        return data;
+    }
     public String toString() {
         return "Block{" +
                 "index=" + index +
