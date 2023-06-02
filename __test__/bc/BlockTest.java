@@ -1,4 +1,4 @@
-package bc;
+package __test__.bc;
 
 import bc.Block;
 import org.junit.Assert;

@@ -1,28 +1,10 @@
-import bc.Block;
-import bc.Store;
+import bc.BlockChain;
+import so.SocketServer;
 
 public class Main {
-
-    public static Boolean isChainValid(){
-        Block currentBlock;
-        Block previousBlock;
-
-        for(int i = 1; i < Store.blockchain.size(); i++){
-            currentBlock = Store.blockchain.get(i);
-            previousBlock = Store.blockchain.get(i-1);
-
-            if(!currentBlock.hash.equals(currentBlock.calculateHash())){
-                System.out.println("Current Hashes not equal");
-                return false;
-            }
-
-            if(!previousBlock.hash.equals(currentBlock.previousHash)){
-                System.out.println("Previous Hashes not equal");
-                return false;
-            }
-        }
-
-        return true;
+    public static void main(String[] args) {
+        BlockChain blockchain = new BlockChain();
+        SocketServer server = new SocketServer(blockchain, 7070);
+        server.iniciarServidor();
     }
-
 }

@@ -1,7 +1,11 @@
-package bc;
+package __test__.bc;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import bc.Block;
+import bc.BlockChain;
+
 import org.junit.jupiter.api.BeforeEach;
 public class BlockChainTest {
 
