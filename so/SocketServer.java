@@ -1,12 +1,9 @@
 package so;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.IOException;
 
-import bc.Block;
 import bc.BlockChain;
 
 public class SocketServer {
@@ -19,30 +16,28 @@ public class SocketServer {
     }
 
     public void iniciarServidor() {
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+        ServerSocket serverSocket = null;
+
+        try {
+            System.out.println("\033[H\033[2J" + "Iniciando servidor...");
+            serverSocket = new ServerSocket(port);
             System.out.println("Servidor iniciado. Aguardando conexões...");
+
+            Socket client;
             this.blockchain.createGenesisBlock();
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Conexão estabelecida com um cliente.");
-
-                InputStream inputStream = clientSocket.getInputStream();
-                byte[] certificado = inputStream.readAllBytes();
-                System.out.println("Certificado recebido: " + certificado.toString());
-
-                Block block = this.blockchain.createBlock(certificado.toString());
-                this.blockchain.addBlock(block);
-
-                OutputStream outputStream = clientSocket.getOutputStream();
-                outputStream.write(block.getHash().getBytes());
-                outputStream.flush();
-
-                clientSocket.close();
-                System.out.println("Conexão encerrada com o cliente.");
+            while ((client = serverSocket.accept()) != null) {
+                System.out.println("Conexão estabelecida com cliente");
+                new GerenciadorDeClientesSocket(client, blockchain);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                if (serverSocket != null)
+                    serverSocket.close();
+                e.printStackTrace();
+            } catch (IOException e1) {
+                System.err.println("A porta não está disponível ou o Servidor foi fechado!");
+            }
         }
     }
 }
