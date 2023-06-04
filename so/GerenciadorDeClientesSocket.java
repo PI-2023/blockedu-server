@@ -23,22 +23,16 @@ public class GerenciadorDeClientesSocket extends Thread {
         try {
             DataInputStream leitor = new DataInputStream(client.getInputStream());
 
-            if (leitor.available() > 0) {
-                String certificado = leitor.readUTF();
-                System.out.println("Certificado recebido!" + certificado);
+            String certificado = leitor.readUTF();
+            System.out.println("Certificado recebido!" + certificado);
 
-                Block block = this.blockChain.createBlock(certificado);
-                this.blockChain.addBlock(block);
-                System.out.println("Hash gerado: " + block.getHash());
+            Block block = this.blockChain.createBlock(certificado);
+            this.blockChain.addBlock(block);
+            System.out.println("Hash gerado: " + block.getHash());
 
-                DataOutputStream envio = new DataOutputStream(client.getOutputStream());
-                envio.writeUTF(block.getHash());
-                envio.flush();
-
-            } else {
-                System.out.println("Certificado vazio!");
-            }
-
+            DataOutputStream envio = new DataOutputStream(client.getOutputStream());
+            envio.writeUTF(block.getHash());
+            envio.flush();
             client.close();
             System.out.println("Conexão encerrada com o cliente.");
         } catch (IOException e) {
